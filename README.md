@@ -28,12 +28,21 @@ mvn test
 
 ## Docker Execution
 
-Run both commands from the repository root.
+1. Open the project root in File Explorer. This is the folder containing `Dockerfile` and `pom.xml`.
+2. Type `powershell` in the File Explorer address bar and press Enter.
+3. Build the Docker image.
 
-```sh
-docker build -t qa-automation-tests .
-docker run --rm qa-automation-tests
-```
+   ```powershell
+   docker build -t qa-automation-tests .
+   ```
+
+4. After the build succeeds, run the tests in the same PowerShell window.
+
+   ```powershell
+   docker run --rm qa-automation-tests
+   ```
+
+5. A successful run shows `BUILD SUCCESS` with all tests run, 0 failures, 0 errors, and 0 skipped.
 
 ## Test Approach
 
