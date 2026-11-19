@@ -14,7 +14,7 @@ Run these commands from the repository root.
 mvn "-Dtest=LoginTest,ProductCartTest" test
 ```
 
-**Booking API test only**
+**Booking API tests**
 
 ```sh
 mvn "-Dtest=BookingApiTest" test
@@ -49,5 +49,4 @@ mvn test
 - **Locators** use SauceDemo's `data-test` attributes for stable element identification.
 - Synchronization relies on Selenide's built-in condition-based waits. No fixed sleeps are used.
 - **UI and API code structure** keeps page-specific locators and actions in UI Page Objects and scenarios in UI test classes. API tests live separately and use REST Assured.
-- **Assumptions and limitations** 
-- Detailed step-by-step logging is not configured. Test results are available through Maven and TestNG reports.
+- **Assumptions and limitations** — The tests rely on the public SauceDemo and Restful Booker services. Their availability and behavior are outside the project's control. Negative coverage includes invalid and empty login credentials and a non-existing booking ID. Other negative scenarios are outside the current coverage.
