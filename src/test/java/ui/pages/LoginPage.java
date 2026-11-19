@@ -9,6 +9,7 @@ public class LoginPage {
     private final SelenideElement usernameInput = $("[data-test='username']");
     private final SelenideElement passwordInput = $("[data-test='password']");
     private final SelenideElement loginButton = $("[data-test='login-button']");
+    private final SelenideElement errorMessage = $("[data-test='error']");
 
     public LoginPage open() {
         Selenide.open("/");
@@ -20,5 +21,9 @@ public class LoginPage {
         passwordInput.setValue(password);
         loginButton.click();
         return new ProductsPage();
+    }
+
+    public SelenideElement errorMessage() {
+        return errorMessage;
     }
 }
