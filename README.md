@@ -11,13 +11,13 @@ Run these commands from the repository root.
 **UI tests**
 
 ```sh
-mvn -Dtest=LoginTest,ProductCartTest test
+mvn "-Dtest=LoginTest,ProductCartTest" test
 ```
 
 **API tests**
 
 ```sh
-mvn -Dtest=BookingApiTest test
+mvn "-Dtest=BookingApiTest" test
 ```
 
 **All tests**
@@ -40,4 +40,6 @@ docker run --rm qa-automation-tests
 - **Locators** use SauceDemo's `data-test` attributes for stable element identification.
 - Synchronization relies on Selenide's built-in condition-based waits. No fixed sleeps are used.
 - **UI and API code structure** keeps page-specific locators and actions in UI Page Objects and scenarios in UI test classes. API tests live separately and use REST Assured.
-- **Assumptions and limitations** stem from using the public SauceDemo and Restful Booker demo services. Coverage includes three positive scenarios: login, price sorting and adding a product to the cart, and booking creation and retrieval. Negative scenarios are outside the current coverage.
+- **Assumptions and limitations** 
+- Only positive scenarios are currently covered. Negative scenarios are not included.
+- Detailed step-by-step logging is not configured. Test results are available through Maven and TestNG reports.
