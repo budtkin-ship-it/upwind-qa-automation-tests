@@ -42,7 +42,7 @@ mvn test
    docker run --rm qa-automation-tests
    ```
 
-5. Check the console for `BUILD SUCCESS` and `Tests run: 3, Failures: 0, Errors: 0, Skipped: 0`.
+5. Check the console for `BUILD SUCCESS` and `Tests run: 6, Failures: 0, Errors: 0, Skipped: 0`.
 
 ## Test Approach
 
@@ -50,5 +50,4 @@ mvn test
 - Synchronization relies on Selenide's built-in condition-based waits. No fixed sleeps are used.
 - **UI and API code structure** keeps page-specific locators and actions in UI Page Objects and scenarios in UI test classes. API tests live separately and use REST Assured.
 - **Assumptions and limitations** 
-- Only positive scenarios are currently covered. Negative scenarios are not included.
 - Detailed step-by-step logging is not configured. Test results are available through Maven and TestNG reports.

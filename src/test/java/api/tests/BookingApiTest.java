@@ -3,22 +3,20 @@ package api.tests;
 import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-public class BookingApiTest {
-    private static final String BASE_URI = "https://restful-booker.herokuapp.com";
-    private static final String FIRST_NAME = "Jamie";
-    private static final String LAST_NAME = "Morgan";
-    private static final int TOTAL_PRICE = 250;
-    private static final boolean DEPOSIT_PAID = true;
-    private static final String CHECK_IN = "2030-05-12";
-    private static final String CHECK_OUT = "2030-05-16";
-
+public class BookingApiTest extends ApiBaseTest {
     @Test
     public void canCreateAndRetrieveBooking() {
+        final String firstName = "Jamie";
+        final String lastName = "Morgan";
+        final int totalPrice = 250;
+        final boolean depositPaid = true;
+        final String checkIn = "2030-05-12";
+        final String checkOut = "2030-05-16";
+
         String bookingBody = """
                 {
                   "firstname": "%s",
@@ -30,12 +28,10 @@ public class BookingApiTest {
                     "checkout": "%s"
                   }
                 }
-                """.formatted(FIRST_NAME, LAST_NAME, TOTAL_PRICE, DEPOSIT_PAID, CHECK_IN, CHECK_OUT);
+                """.formatted(firstName, lastName, totalPrice, depositPaid, checkIn, checkOut);
 
-        Integer bookingId = given()
-                .baseUri(BASE_URI)
+        Integer bookingId = apiRequest()
                 .contentType(ContentType.JSON)
-                .accept("application/json")
                 .body(bookingBody)
                 .when()
                 .post("/booking")
@@ -46,9 +42,7 @@ public class BookingApiTest {
         assertNotNull(bookingId, "POST /booking should return a booking ID");
         assertTrue(bookingId > 0, "Booking ID should be positive, but was " + bookingId);
 
-        given()
-                .baseUri(BASE_URI)
-                .accept("application/json")
+        apiRequest()
                 .pathParam("id", bookingId)
                 .when()
                 .get("/booking/{id}")
@@ -56,11 +50,20 @@ public class BookingApiTest {
                 .statusCode(200)
                 // Group these checks so all field mismatches are reported in one run, similar to SoftAssert.
                 .body(
-                        "firstname", equalTo(FIRST_NAME),
-                        "lastname", equalTo(LAST_NAME),
-                        "totalprice", equalTo(TOTAL_PRICE),
-                        "depositpaid", equalTo(DEPOSIT_PAID),
-                        "bookingdates.checkin", equalTo(CHECK_IN),
-                        "bookingdates.checkout", equalTo(CHECK_OUT));
+                        "firstname", equalTo(firstName),
+                        "lastname", equalTo(lastName),
+                        "totalprice", equalTo(totalPrice),
+                        "depositpaid", equalTo(depositPaid),
+                        "bookingdates.checkin", equalTo(checkIn),
+                        "bookingdates.checkout", equalTo(checkOut));
+    }
+
+    // Verifies that requesting a non-existing booking returns 404 Not Found.
+    @Test
+    public void returnsNotFoundForNonExistingBooking() {
+        apiRequest()
+                .get("/booking/0")
+                .then()
+                .statusCode(404);
     }
 }
