@@ -14,7 +14,7 @@ Run these commands from the repository root.
 mvn "-Dtest=LoginTest,ProductCartTest" test
 ```
 
-**API tests**
+**Booking API test only**
 
 ```sh
 mvn "-Dtest=BookingApiTest" test
@@ -28,21 +28,21 @@ mvn test
 
 ## Docker Execution
 
-1. Open the project root in File Explorer. This is the folder containing `Dockerfile` and `pom.xml`.
-2. Type `powershell` in the File Explorer address bar and press Enter.
-3. Build the Docker image.
+1. Start Docker Desktop and wait for the Linux container engine to be ready.
+2. Open the project root in File Explorer. This is the folder containing `Dockerfile` and `pom.xml`. Type `powershell` in the address bar and press Enter to open PowerShell in that folder.
+3. From the project root, build the image.
 
    ```powershell
    docker build -t qa-automation-tests .
    ```
 
-4. After the build succeeds, run the tests in the same PowerShell window.
+4. After the build succeeds, run the tests in the same PowerShell window. The container runs the full TestNG suite and uses headless Chrome for the UI tests.
 
    ```powershell
    docker run --rm qa-automation-tests
    ```
 
-5. A successful run shows `BUILD SUCCESS` with all tests run, 0 failures, 0 errors, and 0 skipped.
+5. Check the console for `BUILD SUCCESS` and `Tests run: 3, Failures: 0, Errors: 0, Skipped: 0`.
 
 ## Test Approach
 
